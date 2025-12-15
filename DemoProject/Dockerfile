@@ -2,7 +2,8 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
-USER $APP_UID
+# Just to demonstrate the security checks of the GitHub Copilot code reviewer 
+# It will run as root user!!! Do NOT use this in production!!!
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
