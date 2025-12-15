@@ -1,3 +1,21 @@
+/* Light mode colors (default) */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #212529;
+  --nav-bg: #ffffff;
+  --nav-border: rgba(0, 0, 0, 0.125);
+  --footer-text: #6c757d;
+}
+
+/* Dark mode colors */
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --text-color: #e9ecef;
+  --nav-bg: #2d2d2d;
+  --nav-border: rgba(255, 255, 255, 0.125);
+  --footer-text: #adb5bd;
+}
+
 html {
   font-size: 14px;
 }
@@ -19,6 +37,35 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar {
+  background-color: var(--nav-bg) !important;
+  border-color: var(--nav-border) !important;
+  transition: background-color 0.3s ease;
+}
+
+.footer {
+  color: var(--footer-text) !important;
+  transition: color 0.3s ease;
+}
+
+/* Theme toggle button */
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  color: var(--text-color);
+  transition: transform 0.3s ease;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.2);
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
