@@ -6,3 +6,130 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h4 mb-3">Temperature converter</h2>
+                <form id="tempConverterForm" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label" for="temperatureInput">Temperature</label>
+                        <div class="input-group">
+                            <input type="number" step="0.1" class="form-control" id="temperatureInput" name="temperature" aria-describedby="temperatureHelp" required>
+                            <select class="form-select w-auto" id="scaleSelect" name="scale">
+                                <option value="C">Celsius</option>
+                                <option value="F">Fahrenheit</option>
+                            </select>
+                        </div>
+                        <div class="form-text" id="temperatureHelp">Valid range: -273.15 to 1000 (input is not stored).</div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Convert</button>
+                        <button type="reset" class="btn btn-outline-secondary" id="resetButton">Clear</button>
+                    </div>
+                    <div id="tempError" class="alert alert-danger mt-3 d-none" role="alert" aria-live="polite"></div>
+                    <div id="tempResult" class="alert alert-success mt-3 d-none" role="status" aria-live="polite"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (() => {
+            const form = document.getElementById('tempConverterForm');
+            if (!form) {
+                return;
+            }
+
+            const input = document.getElementById('temperatureInput');
+            const scale = document.getElementById('scaleSelect');
+            const errorEl = document.getElementById('tempError');
+            const resultEl = document.getElementById('tempResult');
+            const resetBtn = document.getElementById('resetButton');
+
+            const MIN_TEMP = -273.15;
+            const MAX_TEMP = 1000;
+
+            const clearAlerts = () => {
+                if (errorEl) {
+                    errorEl.classList.add('d-none');
+                    errorEl.textContent = '';
+                }
+                if (resultEl) {
+                    resultEl.classList.add('d-none');
+                    resultEl.textContent = '';
+                }
+            };
+
+            const showError = (message) => {
+                if (!errorEl || !resultEl) {
+                    return;
+                }
+                errorEl.textContent = message;
+                errorEl.classList.remove('d-none');
+                resultEl.classList.add('d-none');
+            };
+
+            const showResult = (message) => {
+                if (!errorEl || !resultEl) {
+                    return;
+                }
+                resultEl.textContent = message;
+                resultEl.classList.remove('d-none');
+                errorEl.classList.add('d-none');
+            };
+
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                if (!input || !scale) {
+                    return;
+                }
+
+                const raw = input.value.trim();
+                const numeric = Number(raw);
+
+                if (raw === '' || Number.isNaN(numeric) || !Number.isFinite(numeric)) {
+                    showError('Enter a numeric temperature.');
+                    return;
+                }
+
+                if (numeric < MIN_TEMP || numeric > MAX_TEMP) {
+                    showError(`Enter a value between ${MIN_TEMP} and ${MAX_TEMP}.`);
+                    return;
+                }
+
+                let converted;
+                let fromLabel;
+                let toLabel;
+
+                if (scale.value === 'C') {
+                    converted = (numeric * 9) / 5 + 32;
+                    fromLabel = 'Celsius';
+                    toLabel = 'Fahrenheit';
+                } else {
+                    converted = ((numeric - 32) * 5) / 9;
+                    fromLabel = 'Fahrenheit';
+                    toLabel = 'Celsius';
+                }
+
+                const rounded = Math.round(converted * 100) / 100;
+                showResult(`${numeric} degrees ${fromLabel} = ${rounded} degrees ${toLabel}`);
+            });
+
+            form.addEventListener('reset', () => {
+                clearAlerts();
+                if (input) {
+                    input.focus();
+                }
+            });
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', clearAlerts);
+            }
+        })();
+    </script>
+}
