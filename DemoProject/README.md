@@ -15,8 +15,7 @@ Planned Copilot demonstration topics:
 3. **Autonomous PR Creation**
 4. **Copilot as PR Reviewer**
 5. **Security & Compliance Checks**
-6. **CI Failures & Copilot Fixes**
-7. **Repo-Wide Reasoning & Architecture Awareness**
+6. **Repo-Wide Reasoning & Architecture Awareness**
 
 ---
 
