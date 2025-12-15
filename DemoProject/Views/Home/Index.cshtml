@@ -142,7 +142,8 @@
                 <form asp-controller="Home" asp-action="Feel" method="post" asp-antiforgery="true">
                     <div class="mb-3">
                         <label for="feelText" class="form-label">Share your thoughts</label>
-                        <input type="text" class="form-control" id="feelText" name="text" placeholder="e.g., I feel great about this weather" maxlength="500">
+                        <input type="text" class="form-control" id="feelText" name="text" placeholder="e.g., I feel great about this weather" maxlength="500" aria-describedby="feelHelp" required>
+                        <div class="form-text" id="feelHelp">Share how you feel about the temperature (max 500 characters).</div>
                     </div>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </form>

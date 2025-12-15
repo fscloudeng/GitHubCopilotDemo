@@ -35,9 +35,7 @@ namespace DemoProject.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            using var sha = SHA256.Create();
-            var bytes = Encoding.UTF8.GetBytes(text.Trim());
-            var hash = sha.ComputeHash(bytes);
+            var hash = SHA256.HashData(Encoding.UTF8.GetBytes(text.Trim()));
             var hex = Convert.ToHexString(hash);
 
             TempData["HashResult"] = $"SHA-256: {hex}";
